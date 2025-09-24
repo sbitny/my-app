@@ -269,9 +269,13 @@ export default function Home() {
           <Switch id="airplane-mode" />
         </div>
 
-        <Combobox options={frameworks} value={framework} onChange={setFramework} />
+        <div className="flex items-center gap-3">
+          <Combobox options={frameworks} value={framework} onChange={setFramework} />
+        </div>
 
-        <DatePicker value={selectedDate} onChange={setSelectedDate} />
+        <div className="flex items-center gap-3">
+          <DatePicker value={selectedDate} onChange={setSelectedDate} />
+        </div>
 
         <div className="space-y-4">
           <Label className="text-sm font-medium">Data table</Label>
