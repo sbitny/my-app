@@ -153,7 +153,7 @@ export default function Home() {
   })
 
   return (
-    <main className="flex min-h-screen items-center justify-center px-10 py-16 bg-gray-100">
+    <main className="flex min-h-screen items-center justify-center px-10 py-16" style={{ backgroundColor: "#F2F1F0" }}>
       <div className="w-full max-w-4xl space-y-10">
         <div className="flex flex-wrap gap-4">
           <Button>Default</Button>
