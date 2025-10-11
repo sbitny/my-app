@@ -1,7 +1,7 @@
 "use client"
 
 import { Fragment, useState } from "react"
-import type { ComponentType, SVGProps } from "react"
+import type { ComponentType } from "react"
 import { ColumnDef } from "@tanstack/react-table"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
@@ -149,6 +149,7 @@ import {
   BadgeCheckIcon,
   ChevronRightIcon,
 } from "lucide-react"
+import type { LucideProps } from "lucide-react"
 import { IconCheck, IconInfoCircle, IconPlus } from "@tabler/icons-react"
 
 const frameworks = [
@@ -249,13 +250,16 @@ const itemLinks = [
 ]
 
 const lucideIconNames = Object.entries(LucideIcons)
-  .filter(([name, component]) =>
-    typeof component === "function" &&
-    /^[A-Z]/.test(name) &&
-    name !== "createLucideIcon" &&
-    name !== "LucideIcon" &&
-    name !== "default"
-  )
+  .filter(([name, component]) => {
+    if (!/^[A-Z]/.test(name)) return false
+    if (["createLucideIcon", "LucideIcon", "default"].includes(name)) return false
+
+    const isComponent =
+      typeof component === "function" ||
+      (typeof component === "object" && component !== null && "$$typeof" in component)
+
+    return isComponent
+  })
   .map(([name]) => name)
   .sort()
 
@@ -939,7 +943,7 @@ export default function Home() {
 
         <div className="mt-[120px] flex flex-wrap gap-3">
           {lucideIconNames.map((name) => {
-            const IconComponent = LucideIcons[name as keyof typeof LucideIcons] as ComponentType<SVGProps<SVGSVGElement>>
+            const IconComponent = LucideIcons[name as keyof typeof LucideIcons] as ComponentType<LucideProps>
             return (
               <div
                 key={name}
