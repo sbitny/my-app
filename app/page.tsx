@@ -218,7 +218,7 @@ export default function Home() {
 
   return (
     <main className="flex min-h-screen items-center justify-center px-10 py-16">
-      <div className="w-full max-w-4xl space-y-10">
+      <div className="w-full max-w-[786px] space-y-10">
         <div className="flex flex-wrap items-start gap-4">
           <div className="flex gap-4">
             <Button>Default</Button>
@@ -500,7 +500,7 @@ export default function Home() {
         <Textarea placeholder="Write your message here" rows={4} />
 
         <TooltipProvider>
-          <div className="grid w-full max-w-sm gap-6">
+          <div className="grid w-full gap-6">
             <InputGroup>
               <InputGroupInput placeholder="Search..." />
               <InputGroupAddon>
@@ -698,7 +698,7 @@ export default function Home() {
           </Item>
         </ItemGroup>
 
-        <ToggleGroup type="multiple" className="flex gap-3">
+        <ToggleGroup type="multiple" className="flex gap-3 justify-start">
           <ToggleGroupItem value="bold" aria-label="Toggle bold">
             B
           </ToggleGroupItem>
@@ -717,7 +717,7 @@ export default function Home() {
 
         <div className="space-y-2">
           <Label>Progress</Label>
-          <Progress value={64} className="w-[250px]" />
+          <Progress value={64} className="w-full" />
         </div>
 
         <div className="space-y-4">
