@@ -1,6 +1,7 @@
 "use client"
 
 import { Fragment, useState } from "react"
+import type { ComponentType, SVGProps } from "react"
 import { ColumnDef } from "@tanstack/react-table"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
@@ -130,6 +131,7 @@ import {
   TooltipTrigger,
   TooltipProvider,
 } from "@/components/ui/tooltip"
+import * as LucideIcons from "lucide-react"
 import {
   ArchiveIcon,
   ArrowLeftIcon,
@@ -245,6 +247,17 @@ const itemLinks = [
     external: true,
   },
 ]
+
+const lucideIconNames = Object.entries(LucideIcons)
+  .filter(([name, component]) =>
+    typeof component === "function" &&
+    /^[A-Z]/.test(name) &&
+    name !== "createLucideIcon" &&
+    name !== "LucideIcon" &&
+    name !== "default"
+  )
+  .map(([name]) => name)
+  .sort()
 
 const paginationPages = [1, 2, 3, 4, 5]
 
@@ -923,6 +936,23 @@ export default function Home() {
             </PaginationItem>
           </PaginationContent>
         </Pagination>
+
+        <div className="mt-[120px] flex flex-wrap gap-3">
+          {lucideIconNames.map((name) => {
+            const IconComponent = LucideIcons[name as keyof typeof LucideIcons] as ComponentType<SVGProps<SVGSVGElement>>
+            return (
+              <div
+                key={name}
+                className="flex size-14 flex-col items-center justify-center gap-1 rounded-md border bg-card p-2 text-xs text-muted-foreground"
+              >
+                <IconComponent className="size-6 text-foreground" aria-hidden />
+                <span className="truncate" title={name}>
+                  {name}
+                </span>
+              </div>
+            )
+          })}
+        </div>
       </div>
     </main>
   )
