@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { Fragment, useState } from "react"
 import { ColumnDef } from "@tanstack/react-table"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
@@ -53,6 +53,11 @@ import {
 } from "@/components/ui/input-group"
 import { Label } from "@/components/ui/label"
 import {
+  Avatar,
+  AvatarFallback,
+  AvatarImage,
+} from "@/components/ui/avatar"
+import {
   Item,
   ItemActions,
   ItemContent,
@@ -60,6 +65,7 @@ import {
   ItemGroup,
   ItemMedia,
   ItemTitle,
+  ItemSeparator,
 } from "@/components/ui/item"
 import {
   Menubar,
@@ -127,15 +133,17 @@ import {
 import {
   ArchiveIcon,
   ArrowLeftIcon,
+  ArrowUpIcon,
   CalendarPlusIcon,
   ClockIcon,
+  ExternalLinkIcon,
   ListPlusIcon,
   MailCheckIcon,
   MoreHorizontalIcon,
+  PlusIcon,
   Search,
   TagIcon,
   Trash2Icon,
-  ArrowUpIcon,
   BadgeCheckIcon,
   ChevronRightIcon,
 } from "lucide-react"
@@ -197,6 +205,45 @@ const team = [
   { name: "Olivia Martin", email: "olivia.martin@example.com", role: "Editor" },
   { name: "Jackson Lee", email: "jackson.lee@example.com", role: "Developer" },
   { name: "Sofia Davis", email: "sofia.davis@example.com", role: "Designer" },
+]
+
+const groupedPeople = [
+  {
+    username: "shadcn",
+    avatar: "https://github.com/shadcn.png",
+    email: "shadcn@vercel.com",
+  },
+  {
+    username: "maxleiter",
+    avatar: "https://github.com/maxleiter.png",
+    email: "maxleiter@vercel.com",
+  },
+  {
+    username: "evilrabbit",
+    avatar: "https://github.com/evilrabbit.png",
+    email: "evilrabbit@vercel.com",
+  },
+]
+
+const itemLinks = [
+  {
+    title: "Visit our documentation",
+    description: "Learn how to get started with our components.",
+    href: "#",
+    external: false,
+  },
+  {
+    title: "Release notes",
+    description: "Catch up on the latest updates and improvements.",
+    href: "#",
+    external: false,
+  },
+  {
+    title: "External resource",
+    description: "Opens in a new tab with security attributes.",
+    href: "https://ui.shadcn.com/",
+    external: true,
+  },
 ]
 
 const paginationPages = [1, 2, 3, 4, 5]
@@ -656,7 +703,56 @@ export default function Home() {
           </MenubarMenu>
         </Menubar>
 
-        <ItemGroup className="flex w-full max-w-md flex-col gap-6">
+        <ItemGroup className="flex w-full max-w-md flex-col gap-4">
+          <Item variant="outline">
+            <ItemMedia>
+              <Avatar className="size-10">
+                <AvatarImage src="https://github.com/evilrabbit.png" alt="@evilrabbit" />
+                <AvatarFallback>ER</AvatarFallback>
+              </Avatar>
+            </ItemMedia>
+            <ItemContent>
+              <ItemTitle>Evil Rabbit</ItemTitle>
+              <ItemDescription>Last seen 5 months ago</ItemDescription>
+            </ItemContent>
+            <ItemActions>
+              <Button
+                size="icon"
+                variant="outline"
+                className="size-8 rounded-full"
+                aria-label="Invite"
+              >
+                <PlusIcon className="size-4" />
+              </Button>
+            </ItemActions>
+          </Item>
+          <Item variant="outline">
+            <ItemMedia>
+              <div className="*:data-[slot=avatar]:ring-background flex -space-x-2 *:data-[slot=avatar]:ring-2 *:data-[slot=avatar]:grayscale">
+                <Avatar className="hidden sm:flex">
+                  <AvatarImage src="https://github.com/shadcn.png" alt="@shadcn" />
+                  <AvatarFallback>CN</AvatarFallback>
+                </Avatar>
+                <Avatar className="hidden sm:flex">
+                  <AvatarImage src="https://github.com/maxleiter.png" alt="@maxleiter" />
+                  <AvatarFallback>LM</AvatarFallback>
+                </Avatar>
+                <Avatar>
+                  <AvatarImage src="https://github.com/evilrabbit.png" alt="@evilrabbit" />
+                  <AvatarFallback>ER</AvatarFallback>
+                </Avatar>
+              </div>
+            </ItemMedia>
+            <ItemContent>
+              <ItemTitle>No Team Members</ItemTitle>
+              <ItemDescription>Invite your team to collaborate on this project.</ItemDescription>
+            </ItemContent>
+            <ItemActions>
+              <Button size="sm" variant="outline">
+                Invite
+              </Button>
+            </ItemActions>
+          </Item>
           <Item variant="outline">
             <ItemContent>
               <ItemTitle>Basic Item</ItemTitle>
@@ -697,6 +793,55 @@ export default function Home() {
             </ItemActions>
           </Item>
         </ItemGroup>
+
+        <ItemGroup className="w-full max-w-md rounded-md border">
+          {groupedPeople.map((person, index) => (
+            <Fragment key={person.username}>
+              <Item>
+                <ItemMedia>
+                  <Avatar>
+                    <AvatarImage src={person.avatar} className="grayscale" alt={person.username} />
+                    <AvatarFallback>{person.username.charAt(0)}</AvatarFallback>
+                  </Avatar>
+                </ItemMedia>
+                <ItemContent className="gap-1">
+                  <ItemTitle>{person.username}</ItemTitle>
+                  <ItemDescription>{person.email}</ItemDescription>
+                </ItemContent>
+                <ItemActions>
+                  <Button variant="ghost" size="icon" className="rounded-full">
+                    <PlusIcon className="size-4" />
+                  </Button>
+                </ItemActions>
+              </Item>
+              {index !== groupedPeople.length - 1 && <ItemSeparator />}
+            </Fragment>
+          ))}
+        </ItemGroup>
+
+        <div className="flex w-full max-w-md flex-col gap-3">
+          {itemLinks.map((item) => (
+            <Item key={item.title} asChild>
+              <a
+                href={item.href}
+                target={item.external ? "_blank" : undefined}
+                rel={item.external ? "noopener noreferrer" : undefined}
+              >
+                <ItemContent>
+                  <ItemTitle>{item.title}</ItemTitle>
+                  <ItemDescription>{item.description}</ItemDescription>
+                </ItemContent>
+                <ItemActions>
+                  {item.external ? (
+                    <ExternalLinkIcon className="size-4" />
+                  ) : (
+                    <ChevronRightIcon className="size-4" />
+                  )}
+                </ItemActions>
+              </a>
+            </Item>
+          ))}
+        </div>
 
         <ToggleGroup type="multiple" className="flex gap-3 justify-start">
           <ToggleGroupItem value="bold" aria-label="Toggle bold">
