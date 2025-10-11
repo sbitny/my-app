@@ -941,22 +941,23 @@ export default function Home() {
           </PaginationContent>
         </Pagination>
 
-        <div className="mt-[120px] flex flex-wrap gap-3">
-          {lucideIconNames.map((name) => {
-            const IconComponent = LucideIcons[name as keyof typeof LucideIcons] as ComponentType<LucideProps>
-            return (
-              <div
-                key={name}
-                className="flex size-14 flex-col items-center justify-center gap-1 rounded-md border bg-card p-2 text-xs text-muted-foreground"
-              >
-                <IconComponent className="size-6 text-foreground" aria-hidden />
-                <span className="truncate" title={name}>
-                  {name}
-                </span>
-              </div>
-            )
-          })}
-        </div>
+        <TooltipProvider>
+          <div className="mt-[120px] flex flex-wrap gap-3">
+            {lucideIconNames.map((name) => {
+              const IconComponent = LucideIcons[name as keyof typeof LucideIcons] as ComponentType<LucideProps>
+              return (
+                <Tooltip key={name}>
+                  <TooltipTrigger asChild>
+                    <div className="flex size-6 items-center justify-center">
+                      <IconComponent className="size-6" aria-hidden />
+                    </div>
+                  </TooltipTrigger>
+                  <TooltipContent>{name}</TooltipContent>
+                </Tooltip>
+              )
+            })}
+          </div>
+        </TooltipProvider>
       </div>
     </main>
   )
