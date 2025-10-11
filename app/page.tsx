@@ -218,7 +218,7 @@ export default function Home() {
 
   return (
     <main className="flex min-h-screen items-center justify-center px-10 py-16">
-      <div className="w-full max-w-[786px] space-y-10">
+      <div className="w-full max-w-[768px] space-y-10">
         <div className="flex flex-wrap items-start gap-4">
           <div className="flex gap-4">
             <Button>Default</Button>
