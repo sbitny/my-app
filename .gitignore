@@ -29,6 +29,9 @@ pnpm-debug.log*
 # macOS system files
 .DS_Store
 
+# Local backups
+styles/globals_backup.css
+
 # Optional lock files (оставь только тот, что используешь)
 package-lock.json
 yarn.lock

@@ -13,10 +13,20 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion"
 import { Button } from "@/components/ui/button"
+import { ButtonGroup } from "@/components/ui/button-group"
 import { Checkbox } from "@/components/ui/checkbox"
 import { Combobox } from "@/components/ui/combobox"
 import { DataTable } from "@/components/ui/data-table"
 import { DatePicker } from "@/components/ui/date-picker"
+import {
+  Field,
+  FieldDescription,
+  FieldGroup,
+  FieldLabel,
+  FieldLegend,
+  FieldSeparator,
+  FieldSet,
+} from "@/components/ui/field"
 import {
   Form,
   FormControl,
@@ -33,7 +43,24 @@ import {
   InputOTPSlot,
 } from "@/components/ui/input-otp"
 import { Input } from "@/components/ui/input"
+import {
+  InputGroup,
+  InputGroupAddon,
+  InputGroupButton,
+  InputGroupInput,
+  InputGroupText,
+  InputGroupTextarea,
+} from "@/components/ui/input-group"
 import { Label } from "@/components/ui/label"
+import {
+  Item,
+  ItemActions,
+  ItemContent,
+  ItemDescription,
+  ItemGroup,
+  ItemMedia,
+  ItemTitle,
+} from "@/components/ui/item"
 import {
   Menubar,
   MenubarContent,
@@ -54,6 +81,19 @@ import {
   PaginationNext,
   PaginationPrevious,
 } from "@/components/ui/pagination"
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuGroup,
+  DropdownMenuItem,
+  DropdownMenuRadioGroup,
+  DropdownMenuRadioItem,
+  DropdownMenuSeparator,
+  DropdownMenuSub,
+  DropdownMenuSubContent,
+  DropdownMenuSubTrigger,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu"
 import { Progress } from "@/components/ui/progress"
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
 import {
@@ -64,6 +104,7 @@ import {
   SelectValue,
 } from "@/components/ui/select"
 import { Slider } from "@/components/ui/slider"
+import { Separator } from "@/components/ui/separator"
 import { Switch } from "@/components/ui/switch"
 import {
   Table,
@@ -77,6 +118,28 @@ import {
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Textarea } from "@/components/ui/textarea"
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group"
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+  TooltipProvider,
+} from "@/components/ui/tooltip"
+import {
+  ArchiveIcon,
+  ArrowLeftIcon,
+  CalendarPlusIcon,
+  ClockIcon,
+  ListPlusIcon,
+  MailCheckIcon,
+  MoreHorizontalIcon,
+  Search,
+  TagIcon,
+  Trash2Icon,
+  ArrowUpIcon,
+  BadgeCheckIcon,
+  ChevronRightIcon,
+} from "lucide-react"
+import { IconCheck, IconInfoCircle, IconPlus } from "@tabler/icons-react"
 
 const frameworks = [
   { value: "next.js", label: "Next.js" },
@@ -146,6 +209,7 @@ export default function Home() {
   const [framework, setFramework] = useState(frameworks[0]?.value ?? "")
   const [selectedDate, setSelectedDate] = useState<Date | undefined>(new Date())
   const [sliderValue, setSliderValue] = useState<number[]>([42])
+  const [buttonGroupLabel, setButtonGroupLabel] = useState("personal")
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -153,15 +217,221 @@ export default function Home() {
   })
 
   return (
-    <main className="flex min-h-screen items-center justify-center px-10 py-16" style={{ backgroundColor: "#F2F1F0" }}>
+    <main className="flex min-h-screen items-center justify-center px-10 py-16">
       <div className="w-full max-w-4xl space-y-10">
-        <div className="flex flex-wrap gap-4">
-          <Button>Default</Button>
-          <Button variant="secondary">Secondary</Button>
-          <Button variant="outline">Outline</Button>
+        <div className="flex flex-wrap items-start gap-4">
+          <div className="flex gap-4">
+            <Button>Default</Button>
+            <Button variant="secondary">Secondary</Button>
+            <Button variant="outline">Outline</Button>
+          </div>
+          <ButtonGroup>
+            <ButtonGroup className="hidden sm:flex">
+              <Button variant="outline" size="icon" aria-label="Go Back">
+                <ArrowLeftIcon />
+              </Button>
+            </ButtonGroup>
+            <ButtonGroup>
+              <Button variant="outline">Archive</Button>
+              <Button variant="outline">Report</Button>
+            </ButtonGroup>
+            <ButtonGroup>
+              <Button variant="outline">Snooze</Button>
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button variant="outline" size="icon" aria-label="More Options">
+                    <MoreHorizontalIcon />
+                  </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="end" className="w-52">
+                  <DropdownMenuGroup>
+                    <DropdownMenuItem>
+                      <MailCheckIcon />
+                      Mark as Read
+                    </DropdownMenuItem>
+                    <DropdownMenuItem>
+                      <ArchiveIcon />
+                      Archive
+                    </DropdownMenuItem>
+                  </DropdownMenuGroup>
+                  <DropdownMenuSeparator />
+                  <DropdownMenuGroup>
+                    <DropdownMenuItem>
+                      <ClockIcon />
+                      Snooze
+                    </DropdownMenuItem>
+                    <DropdownMenuItem>
+                      <CalendarPlusIcon />
+                      Add to Calendar
+                    </DropdownMenuItem>
+                    <DropdownMenuItem>
+                      <ListPlusIcon />
+                      Add to List
+                    </DropdownMenuItem>
+                    <DropdownMenuSub>
+                      <DropdownMenuSubTrigger>
+                        <TagIcon />
+                        Label As...
+                      </DropdownMenuSubTrigger>
+                      <DropdownMenuSubContent>
+                        <DropdownMenuRadioGroup
+                          value={buttonGroupLabel}
+                          onValueChange={setButtonGroupLabel}
+                        >
+                          <DropdownMenuRadioItem value="personal">
+                            Personal
+                          </DropdownMenuRadioItem>
+                          <DropdownMenuRadioItem value="work">
+                            Work
+                          </DropdownMenuRadioItem>
+                          <DropdownMenuRadioItem value="other">
+                            Other
+                          </DropdownMenuRadioItem>
+                        </DropdownMenuRadioGroup>
+                      </DropdownMenuSubContent>
+                    </DropdownMenuSub>
+                  </DropdownMenuGroup>
+                  <DropdownMenuSeparator />
+                  <DropdownMenuGroup>
+                    <DropdownMenuItem className="text-destructive focus:bg-destructive/10 focus:text-destructive">
+                      <Trash2Icon />
+                      Trash
+                    </DropdownMenuItem>
+                  </DropdownMenuGroup>
+                </DropdownMenuContent>
+              </DropdownMenu>
+            </ButtonGroup>
+          </ButtonGroup>
         </div>
 
         <Input placeholder="Default input" />
+
+        <div className="w-full max-w-3xl">
+          <form>
+            <FieldGroup>
+              <FieldSet>
+                <FieldLegend>Payment Method</FieldLegend>
+                <FieldDescription>
+                  All transactions are secure and encrypted
+                </FieldDescription>
+                <FieldGroup>
+                  <Field>
+                    <FieldLabel htmlFor="checkout-7j9-card-name-43j">
+                      Name on Card
+                    </FieldLabel>
+                    <Input
+                      id="checkout-7j9-card-name-43j"
+                      placeholder="Evil Rabbit"
+                      required
+                    />
+                  </Field>
+                  <Field>
+                    <FieldLabel htmlFor="checkout-7j9-card-number-uw1">
+                      Card Number
+                    </FieldLabel>
+                    <Input
+                      id="checkout-7j9-card-number-uw1"
+                      placeholder="1234 5678 9012 3456"
+                      required
+                    />
+                    <FieldDescription>
+                      Enter your 16-digit card number
+                    </FieldDescription>
+                  </Field>
+                  <div className="grid grid-cols-3 gap-4">
+                    <Field>
+                      <FieldLabel htmlFor="checkout-exp-month-ts6">
+                        Month
+                      </FieldLabel>
+                      <Select defaultValue="">
+                        <SelectTrigger id="checkout-exp-month-ts6">
+                          <SelectValue placeholder="MM" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="01">01</SelectItem>
+                          <SelectItem value="02">02</SelectItem>
+                          <SelectItem value="03">03</SelectItem>
+                          <SelectItem value="04">04</SelectItem>
+                          <SelectItem value="05">05</SelectItem>
+                          <SelectItem value="06">06</SelectItem>
+                          <SelectItem value="07">07</SelectItem>
+                          <SelectItem value="08">08</SelectItem>
+                          <SelectItem value="09">09</SelectItem>
+                          <SelectItem value="10">10</SelectItem>
+                          <SelectItem value="11">11</SelectItem>
+                          <SelectItem value="12">12</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    </Field>
+                    <Field>
+                      <FieldLabel htmlFor="checkout-7j9-exp-year-f59">
+                        Year
+                      </FieldLabel>
+                      <Select defaultValue="">
+                        <SelectTrigger id="checkout-7j9-exp-year-f59">
+                          <SelectValue placeholder="YYYY" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="2024">2024</SelectItem>
+                          <SelectItem value="2025">2025</SelectItem>
+                          <SelectItem value="2026">2026</SelectItem>
+                          <SelectItem value="2027">2027</SelectItem>
+                          <SelectItem value="2028">2028</SelectItem>
+                          <SelectItem value="2029">2029</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    </Field>
+                    <Field>
+                      <FieldLabel htmlFor="checkout-7j9-cvv">CVV</FieldLabel>
+                      <Input id="checkout-7j9-cvv" placeholder="123" required />
+                    </Field>
+                  </div>
+                </FieldGroup>
+              </FieldSet>
+              <FieldSeparator />
+              <FieldSet>
+                <FieldLegend>Billing Address</FieldLegend>
+                <FieldDescription>
+                  The billing address associated with your payment method
+                </FieldDescription>
+                <FieldGroup>
+                  <Field orientation="horizontal">
+                    <Checkbox
+                      id="checkout-7j9-same-as-shipping-wgm"
+                      defaultChecked
+                    />
+                    <FieldLabel
+                      htmlFor="checkout-7j9-same-as-shipping-wgm"
+                      className="font-normal"
+                    >
+                      Same as shipping address
+                    </FieldLabel>
+                  </Field>
+                </FieldGroup>
+              </FieldSet>
+              <FieldSet>
+                <FieldGroup>
+                  <Field>
+                    <FieldLabel htmlFor="checkout-7j9-optional-comments">
+                      Comments
+                    </FieldLabel>
+                    <Textarea
+                      id="checkout-7j9-optional-comments"
+                      placeholder="Add any additional comments"
+                      className="resize-none"
+                    />
+                  </Field>
+                </FieldGroup>
+              </FieldSet>
+              <Field orientation="horizontal">
+                <Button type="submit">Submit</Button>
+                <Button variant="outline" type="button">
+                  Cancel
+                </Button>
+              </Field>
+            </FieldGroup>
+          </form>
+        </div>
 
         <Form {...form}>
           <form
@@ -228,6 +498,79 @@ export default function Home() {
         </Select>
 
         <Textarea placeholder="Write your message here" rows={4} />
+
+        <TooltipProvider>
+          <div className="grid w-full max-w-sm gap-6">
+            <InputGroup>
+              <InputGroupInput placeholder="Search..." />
+              <InputGroupAddon>
+                <Search />
+              </InputGroupAddon>
+              <InputGroupAddon align="inline-end">12 results</InputGroupAddon>
+            </InputGroup>
+            <InputGroup>
+              <InputGroupInput placeholder="example.com" className="!pl-1" />
+              <InputGroupAddon>
+                <InputGroupText>https://</InputGroupText>
+              </InputGroupAddon>
+              <InputGroupAddon align="inline-end">
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <InputGroupButton className="rounded-full" size="icon-xs">
+                      <IconInfoCircle />
+                    </InputGroupButton>
+                  </TooltipTrigger>
+                  <TooltipContent>This is content in a tooltip.</TooltipContent>
+                </Tooltip>
+              </InputGroupAddon>
+            </InputGroup>
+            <InputGroup>
+              <InputGroupTextarea placeholder="Ask, Search or Chat..." />
+              <InputGroupAddon align="block-end">
+                <InputGroupButton
+                  variant="outline"
+                  className="rounded-full"
+                  size="icon-xs"
+                >
+                  <IconPlus />
+                </InputGroupButton>
+                <DropdownMenu>
+                  <DropdownMenuTrigger asChild>
+                    <InputGroupButton variant="ghost">Auto</InputGroupButton>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent
+                    side="top"
+                    align="start"
+                    className="[--radius:0.95rem]"
+                  >
+                    <DropdownMenuItem>Auto</DropdownMenuItem>
+                    <DropdownMenuItem>Agent</DropdownMenuItem>
+                    <DropdownMenuItem>Manual</DropdownMenuItem>
+                  </DropdownMenuContent>
+                </DropdownMenu>
+                <InputGroupText className="ml-auto">52% used</InputGroupText>
+                <Separator orientation="vertical" className="!h-4" />
+                <InputGroupButton
+                  variant="default"
+                  className="rounded-full"
+                  size="icon-xs"
+                  disabled
+                >
+                  <ArrowUpIcon />
+                  <span className="sr-only">Send</span>
+                </InputGroupButton>
+              </InputGroupAddon>
+            </InputGroup>
+            <InputGroup>
+              <InputGroupInput placeholder="@shadcn" />
+              <InputGroupAddon align="inline-end">
+                <div className="bg-primary text-primary-foreground flex size-4 items-center justify-center rounded-full">
+                  <IconCheck className="size-3" />
+                </div>
+              </InputGroupAddon>
+            </InputGroup>
+          </div>
+        </TooltipProvider>
 
         <Tabs defaultValue="account" className="w-full">
           <TabsList className="grid w-full grid-cols-2">
@@ -312,6 +655,48 @@ export default function Home() {
             </MenubarContent>
           </MenubarMenu>
         </Menubar>
+
+        <ItemGroup className="flex w-full max-w-md flex-col gap-6">
+          <Item variant="outline">
+            <ItemContent>
+              <ItemTitle>Basic Item</ItemTitle>
+              <ItemDescription>
+                A simple item with title and description.
+              </ItemDescription>
+            </ItemContent>
+            <ItemActions>
+              <Button variant="outline" size="sm">
+                Action
+              </Button>
+            </ItemActions>
+          </Item>
+          <Item variant="outline" size="sm" asChild>
+            <a href="#">
+              <ItemMedia>
+                <BadgeCheckIcon className="size-5" />
+              </ItemMedia>
+              <ItemContent>
+                <ItemTitle>Your profile has been verified.</ItemTitle>
+              </ItemContent>
+              <ItemActions>
+                <ChevronRightIcon className="size-4" />
+              </ItemActions>
+            </a>
+          </Item>
+          <Item variant="muted">
+            <ItemContent>
+              <ItemTitle>Muted Variant</ItemTitle>
+              <ItemDescription>
+                Subdued appearance with muted colors for secondary content.
+              </ItemDescription>
+            </ItemContent>
+            <ItemActions>
+              <Button variant="outline" size="sm">
+                Open
+              </Button>
+            </ItemActions>
+          </Item>
+        </ItemGroup>
 
         <ToggleGroup type="multiple" className="flex gap-3">
           <ToggleGroupItem value="bold" aria-label="Toggle bold">
