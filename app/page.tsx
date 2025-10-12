@@ -253,6 +253,7 @@ const lucideIconNames = Object.entries(LucideIcons)
   .filter(([name, component]) => {
     if (!/^[A-Z]/.test(name)) return false
     if (["createLucideIcon", "LucideIcon", "default"].includes(name)) return false
+    if (name.endsWith("Icon")) return false
 
     const isComponent =
       typeof component === "function" ||
