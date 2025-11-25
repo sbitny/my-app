@@ -68,7 +68,7 @@ import {
   ItemTitle,
   ItemSeparator,
 } from "@/components/ui/item"
-import { Snippet, type SnippetMetaItem } from "@/components/ui/snippet"
+import { GridSnippet, type GridSnippetMetaItem } from "@/components/ui/grid-snippet"
 import {
   Menubar,
   MenubarContent,
@@ -137,7 +137,6 @@ import {
   ArchiveIcon,
   ArrowLeftIcon,
   ArrowUpIcon,
-  CalendarDaysIcon,
   CalendarPlusIcon,
   ClockIcon,
   ExternalLinkIcon,
@@ -152,6 +151,7 @@ import {
   BadgeCheckIcon,
   ChevronRightIcon,
   MapPinIcon,
+  TruckIcon,
 } from "lucide-react"
 import type { LucideProps } from "lucide-react"
 import { IconCheck, IconInfoCircle, IconPlus } from "@tabler/icons-react"
@@ -270,21 +270,22 @@ const lucideIconNames = Object.entries(LucideIcons)
 
 const paginationPages = [1, 2, 3, 4, 5]
 
-const snippetMetaItems: SnippetMetaItem[] = [
-  { id: "parameter", icon: TagIcon, content: "Параметр" },
+const gridSnippetMetaItems: GridSnippetMetaItem[] = [
+  { id: "parameter", content: "Параметр" },
   {
     id: "seller",
-    icon: StarIcon,
     content: (
-      <span className="flex items-baseline gap-1">
-        <span className="font-medium">Имя</span>
-        <span className="text-muted-foreground">4,2 (19)</span>
+      <span className="flex items-center gap-1">
+        <span>Имя</span>
+        <StarIcon className="size-4 text-foreground" strokeWidth={1.33} fill="currentColor" />
+        <span>4,2</span>
+        <span className="text-muted-foreground">(19)</span>
       </span>
     ),
   },
-  { id: "delivery", icon: ClockIcon, content: "5–10 дней" },
-  { id: "address", icon: MapPinIcon, content: "Адрес" },
-  { id: "date", icon: CalendarDaysIcon, content: "Дата" },
+  { id: "delivery", icon: TruckIcon, content: "5—10 дней", muted: true },
+  { id: "address", icon: MapPinIcon, content: "Адрес", muted: true },
+  { id: "date", content: "Дата", muted: true },
 ]
 
 const formSchema = z.object({
@@ -883,7 +884,7 @@ export default function Home() {
           ))}
         </div>
 
-        <Snippet
+        <GridSnippet
           className="w-full max-w-md"
           title="Название"
           image={{
@@ -894,9 +895,9 @@ export default function Home() {
             current: "25 000 ₽",
             previous: "30 000 ₽",
             discount: "-20%",
-            trend: "down",
+            showDropIcon: true,
           }}
-          meta={snippetMetaItems}
+          meta={gridSnippetMetaItems}
           isFavorite={isSnippetFavorite}
           onFavoriteToggle={setIsSnippetFavorite}
         />
