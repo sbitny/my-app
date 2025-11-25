@@ -17,7 +17,6 @@ export type GridSnippetMetaItem = {
   icon?: ComponentType<LucideProps>
   content: ReactNode
   muted?: boolean
-  iconStrokeWidth?: number
 }
 
 export interface GridSnippetProps extends React.HTMLAttributes<HTMLElement> {
@@ -62,29 +61,30 @@ export function GridSnippet({
         />
       </div>
 
-      <div className="mt-[10px] w-full">
-        <div className="grid grid-cols-[1fr_auto] gap-x-1 gap-y-1">
+      <div className="relative mt-[10px] w-full">
+        <button
+          type="button"
+          aria-pressed={isFavorite}
+          aria-label={favoriteLabel}
+          onClick={handleFavoriteToggle}
+          className={cn(
+            "absolute right-0 top-[4px] grid h-8 w-8 place-items-center rounded-full text-foreground transition-colors",
+            isFavorite && "text-destructive"
+          )}
+        >
+          <Heart
+            className="size-5 transition-colors"
+            strokeWidth={2}
+            fill={isFavorite ? "currentColor" : "none"}
+          />
+        </button>
+
+        <div className="space-y-0 pr-[36px]">
           <p className="text-sm font-normal leading-[20px]">{title}</p>
-          <button
-            type="button"
-            aria-pressed={isFavorite}
-            aria-label={favoriteLabel}
-            onClick={handleFavoriteToggle}
-            className={cn(
-              "grid h-8 w-8 place-items-center rounded-full text-foreground transition-colors",
-              isFavorite && "text-destructive"
-            )}
-          >
-            <Heart
-              className="size-5 transition-colors"
-              strokeWidth={2}
-              fill={isFavorite ? "currentColor" : "none"}
-            />
-          </button>
-          <div className="flex items-center gap-1 text-sm font-bold leading-[20px]">
+          <div className="flex items-center gap-1 text-sm font-bold leading-[20px] text-foreground">
             <span>{price.current}</span>
             {price.showDropIcon && (
-              <ArrowDownCircle className="size-4 text-foreground" strokeWidth={1.33} />
+              <ArrowDownCircle className="size-4 text-foreground" strokeWidth={2} />
             )}
           </div>
         </div>
@@ -111,7 +111,7 @@ export function GridSnippet({
                   {Icon ? (
                     <Icon
                       className="size-4 shrink-0 text-muted-foreground"
-                      strokeWidth={item.iconStrokeWidth ?? 1.33}
+                      strokeWidth={2}
                     />
                   ) : null}
                   <span
