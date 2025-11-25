@@ -68,6 +68,7 @@ import {
   ItemTitle,
   ItemSeparator,
 } from "@/components/ui/item"
+import { Snippet, type SnippetMetaItem } from "@/components/ui/snippet"
 import {
   Menubar,
   MenubarContent,
@@ -136,6 +137,7 @@ import {
   ArchiveIcon,
   ArrowLeftIcon,
   ArrowUpIcon,
+  CalendarDaysIcon,
   CalendarPlusIcon,
   ClockIcon,
   ExternalLinkIcon,
@@ -144,10 +146,12 @@ import {
   MoreHorizontalIcon,
   PlusIcon,
   Search,
+  StarIcon,
   TagIcon,
   Trash2Icon,
   BadgeCheckIcon,
   ChevronRightIcon,
+  MapPinIcon,
 } from "lucide-react"
 import type { LucideProps } from "lucide-react"
 import { IconCheck, IconInfoCircle, IconPlus } from "@tabler/icons-react"
@@ -266,6 +270,23 @@ const lucideIconNames = Object.entries(LucideIcons)
 
 const paginationPages = [1, 2, 3, 4, 5]
 
+const snippetMetaItems: SnippetMetaItem[] = [
+  { id: "parameter", icon: TagIcon, content: "Параметр" },
+  {
+    id: "seller",
+    icon: StarIcon,
+    content: (
+      <span className="flex items-baseline gap-1">
+        <span className="font-medium">Имя</span>
+        <span className="text-muted-foreground">4,2 (19)</span>
+      </span>
+    ),
+  },
+  { id: "delivery", icon: ClockIcon, content: "5–10 дней" },
+  { id: "address", icon: MapPinIcon, content: "Адрес" },
+  { id: "date", icon: CalendarDaysIcon, content: "Дата" },
+]
+
 const formSchema = z.object({
   email: z.string().email({ message: "Please enter a valid email." }),
 })
@@ -275,6 +296,7 @@ export default function Home() {
   const [selectedDate, setSelectedDate] = useState<Date | undefined>(new Date())
   const [sliderValue, setSliderValue] = useState<number[]>([42])
   const [buttonGroupLabel, setButtonGroupLabel] = useState("personal")
+  const [isSnippetFavorite, setIsSnippetFavorite] = useState(false)
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -860,6 +882,24 @@ export default function Home() {
             </Item>
           ))}
         </div>
+
+        <Snippet
+          className="w-full max-w-md"
+          title="Название"
+          image={{
+            src: "https://images.unsplash.com/photo-1610945264803-4d47066b95b7?auto=format&fit=crop&w=400&q=80",
+            alt: "Смартфон",
+          }}
+          price={{
+            current: "25 000 ₽",
+            previous: "30 000 ₽",
+            discount: "-20%",
+            trend: "down",
+          }}
+          meta={snippetMetaItems}
+          isFavorite={isSnippetFavorite}
+          onFavoriteToggle={setIsSnippetFavorite}
+        />
 
         <ToggleGroup type="multiple" className="flex gap-3 justify-start">
           <ToggleGroupItem value="bold" aria-label="Toggle bold">
