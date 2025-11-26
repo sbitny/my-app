@@ -287,8 +287,8 @@ const gridSnippetMetaItems: GridSnippetMetaItem[] = [
       </span>
     ),
   },
-  { id: "delivery", icon: TruckIcon, content: "5—10 дней", muted: true },
-  { id: "address", icon: MapPinIcon, content: "Адрес", muted: true },
+  { id: "delivery", icon: TruckIcon, content: "5—10 дней", muted: true, iconClassName: "-translate-y-px" },
+  { id: "address", icon: MapPinIcon, content: "Адрес", muted: true, iconClassName: "-translate-y-px" },
   { id: "date", content: "Дата", muted: true },
 ]
 

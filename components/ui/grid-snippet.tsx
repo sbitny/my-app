@@ -17,6 +17,7 @@ export type GridSnippetMetaItem = {
   icon?: ComponentType<LucideProps>
   content: ReactNode
   muted?: boolean
+  iconClassName?: string
 }
 
 export interface GridSnippetProps extends React.HTMLAttributes<HTMLElement> {
@@ -112,7 +113,10 @@ export function GridSnippet({
                 >
                   {Icon ? (
                     <Icon
-                      className="size-4 shrink-0 text-muted-foreground"
+                      className={cn(
+                        "size-4 shrink-0 text-muted-foreground",
+                        item.iconClassName
+                      )}
                       strokeWidth={2}
                     />
                   ) : null}
