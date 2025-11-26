@@ -277,7 +277,7 @@ const gridSnippetMetaItems: GridSnippetMetaItem[] = [
     content: (
       <span className="flex items-center gap-1">
         <span>Имя</span>
-        <StarIcon className="size-4 text-foreground" strokeWidth={2} fill="currentColor" />
+        <StarIcon className="h-[14px] w-[14px] text-foreground" strokeWidth={2} fill="currentColor" />
         <span>4,2</span>
         <span className="text-muted-foreground">(19)</span>
       </span>
