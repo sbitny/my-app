@@ -49,11 +49,8 @@ export function GridSnippet({
   }, [isFavorite, onFavoriteToggle])
 
   return (
-    <article
-      className={cn("flex flex-col text-sm leading-[20px] text-foreground", className)}
-      {...props}
-    >
-      <div className="overflow-hidden rounded-[16px] bg-muted">
+    <article className={cn("flex flex-col text-sm leading-[20px] text-foreground", className)} {...props}>
+      <div className="relative -mx-[6px] overflow-hidden rounded-[16px] bg-muted">
         <img
           src={image.src}
           alt={image.alt ?? title}
