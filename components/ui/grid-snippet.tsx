@@ -91,7 +91,9 @@ export function GridSnippet({
 
         {(price.previous || price.discount) && (
           <div className="flex items-center gap-1 text-sm leading-[20px] text-muted-foreground">
-            {price.previous && <span className="line-through">{price.previous}</span>}
+            {price.previous && (
+              <span className="line-through text-foreground">{price.previous}</span>
+            )}
             {price.discount && <span className="text-destructive font-normal">{price.discount}</span>}
           </div>
         )}
