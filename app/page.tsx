@@ -277,7 +277,11 @@ const gridSnippetMetaItems: GridSnippetMetaItem[] = [
     content: (
       <span className="flex items-center gap-1">
         <span>Имя</span>
-        <StarIcon className="h-[14px] w-[14px] text-foreground" strokeWidth={2} fill="currentColor" />
+        <StarIcon
+          className="inline-block h-[14px] w-[14px] -translate-y-px text-foreground"
+          strokeWidth={2}
+          fill="currentColor"
+        />
         <span>4,2</span>
         <span className="text-muted-foreground">(19)</span>
       </span>
@@ -894,7 +898,7 @@ export default function Home() {
           price={{
             current: "25 000 ₽",
             previous: "30 000 ₽",
-            discount: "-20%",
+            discount: "−20%",
             showDropIcon: true,
           }}
           meta={gridSnippetMetaItems}
